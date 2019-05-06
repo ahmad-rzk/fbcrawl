@@ -1,0 +1,11 @@
+package fbcrawl;
+ 
+message CommentItem {
+    required string source = 1;
+	required string reply_to = 2;
+	required int64 date=3;
+	required string text=4;
+	required int64 reactions=5;
+	required string source_url=6;
+	required string url=7;
+}

@@ -1,0 +1,13 @@
+package fbcrawl;
+ 
+message FbCrawlItem {
+    required string source = 1;
+	required int64 date=2;
+    required string text = 3;
+	required string comments=4;
+	required int64 reactions=5;
+	required string share=6;
+	required string url=7;
+	required string post_id=8;
+	required string shared_from=9;
+}
