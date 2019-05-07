@@ -233,4 +233,3 @@ class FacebookSpider(scrapy.Spider):
         new.add_xpath('sigh',xREACTIONS_['attributes']['sigh'])
         new.add_xpath('grrr',xREACTIONS_['attributes']['grrr'])
         yield new.load_item()
-
