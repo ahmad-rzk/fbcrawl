@@ -15,12 +15,17 @@ class FacebookSpider(scrapy.Spider):
     Parse FB pages (needs credentials)
     '''
     name = 'fb'
+    # custom_settings = {
+    #     'FEED_EXPORT_FIELDS': ['source','shared_from','date','text', \
+    #                            'reactions','likes','ahah','love','wow', \
+    #                            'sigh','grrr','comments','post_id','url']
+    # }
     custom_settings = {
         'FEED_EXPORT_FIELDS': ['source','shared_from','date','text', \
-                               'reactions','likes','ahah','love','wow', \
-                               'sigh','grrr','comments','post_id','url'],
-        'DUPEFILTER_CLASS' : 'scrapy.dupefilters.BaseDupeFilter',
+                               'reactions', \
+                               'comments','post_id','url']
     }
+
 
     def __init__(self, *args, **kwargs):
         #turn off annoying logging, set LOG_LEVEL=DEBUG in settings.py to see more logs
@@ -85,6 +90,13 @@ class FacebookSpider(scrapy.Spider):
         self.count = 0
 
         self.start_urls = ['https://mbasic.facebook.com']
+
+        #the socket to output to 
+        if 'outputAddress' not in kwargs:
+            self.outputAddress = "tcp://127.0.0.1:8"
+        else:
+            self.outputAddress = str(kwargs['outputAddress'])
+
 
     def parse(self, response):
         '''
@@ -166,7 +178,7 @@ class FacebookSpider(scrapy.Spider):
                 raise CloseSpider('Reached max num of post: {}. Crawling finished'.format(abs(self.count)))
             self.logger.info('Parsing post n = {}'.format(abs(self.count)))
             new.add_xpath('comments', xPOST_['attributes']['comments'])
-            new.add_xpath('date',xPOST_['attributes']['date'])
+            new.add_value('date',date)
             new.add_xpath('post_id',xPOST_['attributes']['post_id'])
             new.add_xpath('url', xPOST_['attributes']['url'])
 
@@ -232,17 +244,18 @@ class FacebookSpider(scrapy.Spider):
             yield new.load_item()
         else:
             new.add_xpath('reactions',xPOST_['attributes']['reactions'])
-            reactions = response.xpath(xREACTIONS_['root'])
-            reactions = response.urljoin(reactions[0].extract())
-            yield scrapy.Request(reactions, callback=self.parse_reactions, meta={'item':new})
+#            reactions = response.xpath(xREACTIONS_['root'])
+#            reactions = response.urljoin(reactions[0].extract())
+            yield new.load_item()
+#            yield scrapy.Request(reactions, callback=self.parse_reactions, meta={'item':new})
 
-    def parse_reactions(self,response):
-        new = ItemLoader(item=FbcrawlItem(),response=response, parent=response.meta['item'])
-        new.context['lang'] = self.lang
-        new.add_xpath('likes',xREACTIONS_['attributes']['likes'])
-        new.add_xpath('ahah',xREACTIONS_['attributes']['ahah'])
-        new.add_xpath('love',xREACTIONS_['attributes']['love'])
-        new.add_xpath('wow',xREACTIONS_['attributes']['wow'])
-        new.add_xpath('sigh',xREACTIONS_['attributes']['sigh'])
-        new.add_xpath('grrr',xREACTIONS_['attributes']['grrr'])
-        yield new.load_item()
+    # def parse_reactions(self,response):
+    #     new = ItemLoader(item=FbcrawlItem(),response=response, parent=response.meta['item'])
+    #     new.context['lang'] = self.lang
+    #     new.add_xpath('likes',xREACTIONS_['attributes']['likes'])
+    #     new.add_xpath('ahah',xREACTIONS_['attributes']['ahah'])
+    #     new.add_xpath('love',xREACTIONS_['attributes']['love'])
+    #     new.add_xpath('wow',xREACTIONS_['attributes']['wow'])
+    #     new.add_xpath('sigh',xREACTIONS_['attributes']['sigh'])
+    #     new.add_xpath('grrr',xREACTIONS_['attributes']['grrr'])
+    #     yield new.load_item()

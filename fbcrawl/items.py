@@ -577,22 +577,23 @@ class FbcrawlItem(scrapy.Item):
     reactions = scrapy.Field(
         output_processor=reactions_strip
     )                  # num of reactions
-    likes = scrapy.Field(
+
+    #likes = scrapy.Field(
         output_processor=reactions_strip
     )                      
-    ahah = scrapy.Field(
+    #ahah = scrapy.Field(
         output_processor=reactions_strip
     )                   
-    love = scrapy.Field(
+    #love = scrapy.Field(
         output_processor=reactions_strip
     )                                         
-    wow = scrapy.Field(
+    #wow = scrapy.Field(
         output_processor=reactions_strip
     )                                        
-    sigh = scrapy.Field(
+    #sigh = scrapy.Field(
         output_processor=reactions_strip
     )                   
-    grrr = scrapy.Field(
+    #grrr = scrapy.Field(
         output_processor=reactions_strip
     )                   
     share = scrapy.Field()                      # num of shares
@@ -616,14 +617,14 @@ class CommentsItem(scrapy.Item):
     reactions = scrapy.Field(
         output_processor=reactions_strip
     )                  # num of reactions
-    likes = scrapy.Field(
-        output_processor=reactions_strip
-    )                      
+    # likes = scrapy.Field(
+    #     output_processor=reactions_strip
+    # )                      
     source_url = scrapy.Field()                      
     url = scrapy.Field()
-    ahah = scrapy.Field()                      
-    love = scrapy.Field()                      
-    wow = scrapy.Field()                      
-    sigh = scrapy.Field()                      
-    grrr = scrapy.Field()                      
-    share = scrapy.Field()                      # num of shares
+    #ahah = scrapy.Field()                      
+    #love = scrapy.Field()                      
+    #wow = scrapy.Field()                      
+    #sigh = scrapy.Field()                      
+    #grrr = scrapy.Field()                      
+    #share = scrapy.Field()
