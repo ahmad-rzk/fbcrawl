@@ -627,3 +627,4 @@ class CommentsItem(scrapy.Item):
     sigh = scrapy.Field()                      
     grrr = scrapy.Field()                      
     share = scrapy.Field()                      # num of shares
+

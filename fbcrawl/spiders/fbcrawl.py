@@ -165,6 +165,7 @@ class FacebookSpider(scrapy.Spider):
             if abs(self.count) + 1 > self.max:
                 raise CloseSpider('Reached max num of post: {}. Crawling finished'.format(abs(self.count)))
             self.logger.info('Parsing post n = {}'.format(abs(self.count)))
+
             new.add_xpath('comments', xPOST_['attributes']['comments'])
             new.add_xpath('date',xPOST_['attributes']['date'])
             new.add_xpath('post_id',xPOST_['attributes']['post_id'])
@@ -179,11 +180,11 @@ class FacebookSpider(scrapy.Spider):
             yield scrapy.Request(temp_post, self.parse_post, priority = self.count, meta={'item':new})
 
         #load following page, try to click on "more"
+
         if self.group == 1:
             new_page = response.xpath("//div[contains(@id,'stories_container')]/div[2]/a/@href").extract()
         else:
             new_page = response.xpath(xMORE_POSTS_HYPERLINK).extract()
-
         if not new_page:
             self.logger.info('[!] "more" link not found, will look for a year')
             #self.k is the year that we look for in the link.
