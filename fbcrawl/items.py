@@ -576,26 +576,15 @@ class FbcrawlItem(scrapy.Item):
     )                                       
     reactions = scrapy.Field(
         output_processor=reactions_strip
-    )                  # num of reactions
+    )                 
+     # num of reactions
 
-    #likes = scrapy.Field(
-        output_processor=reactions_strip
-    )                      
-    #ahah = scrapy.Field(
-        output_processor=reactions_strip
-    )                   
-    #love = scrapy.Field(
-        output_processor=reactions_strip
-    )                                         
-    #wow = scrapy.Field(
-        output_processor=reactions_strip
-    )                                        
-    #sigh = scrapy.Field(
-        output_processor=reactions_strip
-    )                   
-    #grrr = scrapy.Field(
-        output_processor=reactions_strip
-    )                   
+    #likes = scrapy.Field(output_processor=reactions_strip)                      
+    #ahah = scrapy.Field(output_processor=reactions_strip)                   
+    #love = scrapy.Field(output_processor=reactions_strip)                                         
+    #wow = scrapy.Fieloutput_processor=reactions_strip)                                        
+    #sigh = scrapy.Field(output_processor=reactions_strip)                   
+    #grrr = scrapy.Field(output_processor=reactions_strip)                   
     share = scrapy.Field()                      # num of shares
     url = scrapy.Field(
         output_processor=url_strip
